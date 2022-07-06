@@ -1,0 +1,27 @@
+server:
+  port: 8089
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    instance-id: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: microservicio1
+          uri: lb:/microservicio1
+          predicates:
+            - Path=/productos/**
+        - id: microservicio2
+          uri: lb://microservicio2
+          predicates:
+            - Path=/nuevosPrecios/**
+    
